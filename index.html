@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spendwell Bank - Secure Online Banking</title>
+    <meta name="description" content="Secure online banking with Spendwell Bank. Access your account, manage finances, and bank with confidence.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+      
+          <!-- Group logo icon + text -->
+          <div class="logo">
+            <img src="images/logo.png" alt="logo" class="logo-icon">
+            <span class="spendwell-text">spendwell</span>
+          </div>
+      
+          <!-- CTA on the right (desktop only) -->
+          <div class="header-cta">
+            <span class="cta-text">Don't have an Account?</span> 
+            <span class="create-account">Create one today!</span>
+          </div>
+
+        </div>
+    </header>
+      
+
+    <!-- Login Section -->
+    <section class="login-section">
+      <div class="login-container">
+        <h1 class="login-title">Welcome! We’re happy you’re here.</h1>
+        <p class="login-subtitle">Log in below to access your Account.</p>
+    
+        <form class="login-form" id="loginForm">
+          <div class="form-group">
+            <input type="text" id="username" class="form-input" placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" class="form-input" placeholder="Password" required>
+          </div>
+          <div class="form-options">
+            <label class="remember">
+              <input type="checkbox" id="remember">
+              <span>Remember my username</span>
+            </label>
+          </div>
+
+          <button type="submit" id="loginButton" class="login-btn">
+            <span class="button-text">Log In</span>
+            <span id="loadingSpinner" class="spinner" style="display:none;"></span>
+          </button>
+
+          <div class="form-links">
+            <a href="#" class="forgot-link">Forgot username/password?</a> <strong class="or">or</strong> <a href="card-login.html">Log In with card details</a>
+          </div>
+
+          <div class="your-info"> 
+              <img src="images/lock.jpg" alt="secured"> 
+              <span>Your information is secure.</span>
+          </div>
+        </form>
+      </div>
+    </section>
+  
+
+    <!-- Footer -->
+    <div class="footer-section1">
+      <div class="footer-logo">
+          <img src="images/logow.jpg" alt="logo" class="logo-icon">
+          <span class="logo-text dark" id="spendwell-text">spendwell</span>
+      </div>
+  </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+
+                <div class="footer-section">
+                    <h3 class="footer-heading">Our Products</h3>
+                    <ul class="footer-links">
+                        <li>spendwell® No Monthly Fee</li>
+                        <li>spendwell® Cash Back</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-heading">Resources</h3>
+                    <ul class="footer-links">
+                        <li>Fee Chart</li>
+                        <li>ATM Finder</li>
+                        <li>Legal/Privacy</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-heading">Support</h3>
+                    <ul class="footer-links">
+                        <li>FAQs</li>
+                        <li>Contact Us</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="app-buttons">
+                <div class="app-button">
+                    <div class="app-icon">
+                        <img src="images/as.jpg" alt="app-store">
+                    </div>
+                   
+                </div>
+                <div class="app-button">
+                    <div class="app-icon">
+                        <img src="images/gp.jpg" alt="play-store">
+                    </div>
+           
+                    </div>
+                </div>
+            </div>
+
+            <div class="legal-text">
+                <p><strong>spendwell</strong>® Bank Account is a demand deposit account established by Pathward®, N.A., Member FDIC. Funds are FDIC insured, subject to applicable limitations and restrictions, when we receive the funds deposited to your account. <strong>spendwell</strong> and InComm Payments are not banks or FDIC-insured institutions and the FDIC's deposit insurance coverage only protects against the failure of an FDIC-insured institution. Please see the <a href="#" class="legal-link">Deposit Account Agreement</a> for complete terms, conditions and fees apply. Card can be used everywhere Visa® debit cards are accepted. Card is issued by Pathward pursuant to a license by Visa U.S.A, Inc.</p>
+                
+                <p>Users of the <strong>spendwell</strong> Bank Account are subject to Pathward's <a href="#" class="legal-link">Privacy Statement</a>.</p>
+                
+                <p>Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.</p>
+                
+                <p>Android, Google Play and the Google Play logo are trademarks of Google Inc.</p>
+                
+                <p>This site is protected by <a href="#" class="legal-link">hCaptcha</a> and its <a href="#" class="legal-link">Privacy Policy</a> and <a href="#" class="legal-link">Terms of Service</a> apply.</p>
+                
+                <p>All users of our online services agree to be bound by the <a href="#" class="legal-link">Terms of Use</a>. You can set preferences with <button class="privacy-preferences">Your Privacy Preferences</button></p>
+                
+                <p class="copyright">Copyright ©2025 InComm Payments™. All Rights Reserved. All trademarks are the property of their respective owners.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;">
+        <div class="toast-content">
+            <div class="toast-title" id="toastTitle"></div>
+            <div class="toast-message" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

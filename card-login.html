@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spendwell Bank — Card Login (Demo)</title>
+  <link rel="stylesheet" href="card-login.css">
+  <meta name="description" content="Demo-only bank card login page. Do NOT enter real card details." />
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" role="banner" aria-label="Acme Bank header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Spendwell</span>
+        <span class="badge-demo" title="Demo only">HELLO!</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container grid" role="main">
+    <!-- Left: Pretty card + trust copy -->
+    <section class="panel">
+      <div class="inner">
+        <h1 style="margin: 0 0 12px; font-size: 22px;">Card Login</h1>
+        <p style="margin: 0 0 18px; color: var(--muted);">Sign in to your account with your card details.</p>
+        <div class="card-mock" aria-hidden="true">
+          <div class="waves"></div>
+          <div class="chip"></div>
+          <div class="logo">SPENDWELL •••</div>
+          <div class="card-number" id="preview-number">•••• •••• •••• ••••</div>
+          <div class="card-meta">
+            <div>NAME: <span id="preview-name">SPEND WELL</span></div>
+            <div>EXP: <span id="preview-exp">MM/YY</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Form -->
+    <section class="panel">
+      <div class="inner">
+        <form id="cardLoginForm" novalidate>
+          <div>
+            <label for="cc-name">Cardholder Name</label>
+            <input id="cc-name" name="cc-name" type="text" autocomplete="cc-name" placeholder="As printed on card" required />
+            <div class="field-error" id="err-name">Enter the name on the card.</div>
+          </div>
+
+          <div>
+            <label for="username">Card Number</label>
+            <input id="username" name="cc-number" type="tel" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="19" required />
+            <div class="hint">We use the Luhn check on-device. No data is sent until you press Login.</div>
+            <div class="field-error" id="err-number">Enter a valid card number.</div>
+          </div>
+
+          <div class="row cols-2">
+            <div>
+              <label for="phone">Expiry (MM/YY)</label>
+              <input id="phone" name="cc-exp" type="tel" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY" maxlength="5" required />
+              <div class="field-error" id="err-exp">Enter a valid future date (MM/YY).</div>
+            </div>
+            <div>
+              <label for="otp">CVV</label>
+              <input id="otp" name="cc-csc" type="tel" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" required />
+              <div class="field-error" id="err-cvv">Enter a 3–4 digit CVV.</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="loginButton" class="btn-primary" type="submit" aria-label="Login with card">Login</button>
+          </div>
+
+          <div class="form-links">
+            <a href="index.html" class="forgot-link">Log In with username & password</a>
+          </div>
+
+          <div class="your-info">  
+            <span>&#128274; Your information is secure.</span>
+        </div>
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="footer">
+    <small>© <span id="year"></span> Spendwell. <a href="#">Privacy</a> · <a href="#">Security</a></small>
+  </footer>
+
+  
+    <script src="card-login.js"></script>
+</body>
+</html>
