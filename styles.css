@@ -310,21 +310,21 @@ body {
 /* Small screens (mobile) */
 @media (max-width: 480px) {
   .otp-content {
-    padding: 1.5rem 1rem;
-    font-size: 0.9rem;
+    padding: 1rem 0.5rem;
+    font-size: 0.5rem;
   }
 
   .otp-content h2 {
-    font-size: 1.2rem;
-  }
-
-  #otpInput {
     font-size: 1rem;
   }
 
+  #otpInput {
+    font-size: 0.7rem;
+  }
+
   #verifyOtpBtn {
-    font-size: 0.95rem;
-    padding: 0.8rem;
+    font-size: 0.8rem;
+    padding: 0.6rem;
   }
 }
 
@@ -379,8 +379,8 @@ body {
 /* Small screens */
 @media (max-width: 480px) {
   .otp-box {
-    width: 38px;
-    height: 44px;
+    width: 35px;
+    height: 40px;
     font-size: 1rem;
   }
 }
@@ -683,6 +683,17 @@ hr {
     z-index: 1000;
   }
 
+  .create-account {
+    color: #f7ea31;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  .spendwell-text {
+    font-size: 22px; 
+  }
+
   .remember {
     display: flex;
     align-items: center;
@@ -690,7 +701,7 @@ hr {
   }
 
   .welcome-title {
-      font-size: 2rem;
+      font-size: 1.7rem;
   }
   
   .footer-content {
